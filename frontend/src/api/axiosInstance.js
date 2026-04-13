@@ -1,13 +1,13 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1',
   withCredentials: true,
 })
 
 api.interceptors.request.use((config) => {
   try {
-    const data = localStorage.getItem('servifind_user')
+    const data   = localStorage.getItem('servifind_user')
     const parsed = data ? JSON.parse(data) : null
     if (parsed?.token) {
       config.headers.Authorization = `Bearer ${parsed.token}`
